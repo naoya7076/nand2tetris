@@ -1,14 +1,33 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// File name: projects/04/Fill.asm
+// TODO: 何も押していないときは画面を白くする箇所を実装する
+(INFINITE_LOOP)
+    @KBD            // キーボードレジスタをチェック
+    D=M             // DにKBDの値をロード
+    @BLACK_SCREEN   // キーが押された場合、スクリーンを黒くする処理へジャンプ
+    D;JGT           // キーが押されていればジャンプ
+    @CLEAR_SCREEN  // キーが押されていなければ無限ループを続行
+    0;JMP           // 無条件でジャンプ
 
-// Runs an infinite loop that listens to the keyboard input.
-// When a key is pressed (any key), the program blackens the screen
-// by writing 'black' in every pixel;
-// the screen should remain fully black as long as the key is pressed. 
-// When no key is pressed, the program clears the screen by writing
-// 'white' in every pixel;
-// the screen should remain fully clear as long as no key is pressed.
+// スクリーンを黒くする
+(BLACK_SCREEN)
+    @SCREEN         // スクリーンの開始アドレス
+    D=A             // スクリーンの開始アドレスをDにロード
+    @16384          // ループの終了アドレス（スクリーン領域のサイズに応じて調整）
+    @R1             // R1をカウンタとして使用
+    M=D             // R1にスクリーンの開始アドレスを保存
 
-//// Replace this comment with your code.
+// ピクセルを黒く塗りつぶすループ
+(FILL_LOOP)
+    @R1             // カウンタ（現在のアドレス）を参照
+    A=M             // Aレジスタにカウンタの値をセット
+    M=-1            // 現在のピクセルを黒くする（全ビットを1に設定）
+    @R1             // カウンタのアドレスを参照
+    M=M+1           // カウンタを1増やす
+    @24576          // スクリーンのピクセル数に基づく終了アドレス（8192ピクセル * 3 = 24576）
+    D=A             // 終了アドレスをDにロード
+    @R1             // カウンタを再度参照
+    A=M             // Aレジスタにカウンタの値をセット
+    D=D-A           // 終了アドレスから現在のアドレスを引く
+    @FILL_LOOP
+    D;JGT           // 結果が正の場合、まだスクリーンの終わりに達していないのでループを続行
+    @INFINITE_LOOP  // スクリーンの塗りつぶしが完了したら、無限ループの開始点に戻る
+    0;JMP           // 無条件でジャンプ
