@@ -19,5 +19,12 @@ CHIP Memory {
     OUT out[16];
 
     PARTS:
+    DMux(in=load,sel=address[14],a=lram,b=lsk); // loadが1かつaddress[14]が1のときにlskに1が入る。loadが1かつaddress[14]が0のときにlramに1が入る。
+    RAM16K(address=address[0..13], in=in, load=lram, out=out1);
+
+    DMux(in=lsk, sel=address[13], a=ls, b=lk);
+    Screen(address=address[0..12], in=in, load=ls, out=out2);
+    Keyboard(out=out3);
+    Mux4Way16(a=out1, b=out1, c=out2, d=out3, sel=address[13..14], out=out);
     //// Replace this comment with your code.
 }
