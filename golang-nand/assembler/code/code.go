@@ -14,6 +14,20 @@ func Dest(mnemonic string) string {
 	return mnemonics[mnemonic]
 }
 
+func Jump(mnemonic string) string {
+	mnemonics := map[string]string{
+		"null": "000",
+		"JGT":  "001",
+		"JEQ":  "010",
+		"JGE":  "011",
+		"JLT":  "100",
+		"JNE":  "101",
+		"JLE":  "110",
+		"JMP":  "111",
+	}
+	return mnemonics[mnemonic]
+}
+
 func Comp(mnemonic string) string {
 	mnemonics := map[string]string{
 		"0":   "0101010",

@@ -27,6 +27,28 @@ func TestDest(t *testing.T) {
 	}
 }
 
+func TestJump(t *testing.T) {
+	cases := []struct {
+		mnemonic string
+		want     string
+	}{
+		{"null", "000"},
+		{"JGT", "001"},
+		{"JEQ", "010"},
+		{"JGE", "011"},
+		{"JLT", "100"},
+		{"JNE", "101"},
+		{"JLE", "110"},
+		{"JMP", "111"},
+	}
+	for _, tt := range cases {
+		binaryCode := code.Jump(tt.mnemonic)
+		if binaryCode != tt.want {
+			t.Errorf("want %s, got %s", tt.want, binaryCode)
+		}
+	}
+}
+
 func TestComp(t *testing.T) {
 	cases := []struct {
 		mnemonic string
