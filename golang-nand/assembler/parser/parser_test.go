@@ -84,4 +84,9 @@ func TestComp(t *testing.T) {
 	if got != want {
 		t.Errorf("want %s, got %s", want, got)
 	}
+	want = "M"
+	got = parser.New("D=M").Comp()
+	if got != want {
+		t.Errorf("want %s, got %s", want, got)
+	}
 }
