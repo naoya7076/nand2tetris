@@ -10,6 +10,7 @@ func TestDest(t *testing.T) {
 		mnemonic string
 		want     string
 	}{
+		{"", ""},
 		{"null", "000"},
 		{"M", "001"},
 		{"D", "010"},
@@ -32,6 +33,7 @@ func TestJump(t *testing.T) {
 		mnemonic string
 		want     string
 	}{
+		{"", ""},
 		{"null", "000"},
 		{"JGT", "001"},
 		{"JEQ", "010"},
