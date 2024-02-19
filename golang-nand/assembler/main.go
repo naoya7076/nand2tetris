@@ -30,7 +30,7 @@ func main() {
 		trimmedSrc += strings.ReplaceAll(text, " ", "") + "\n"
 	}
 	// 出力ファイルを作成
-	outputFileName := fileName[:len(fileName)-3] + ".hack"
+	outputFileName := fileName[:len(fileName)-3] + "sample.hack"
 	outputFile, err := os.Create(outputFileName)
 	if err != nil {
 		fmt.Println("File not found")
