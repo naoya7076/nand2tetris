@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -39,17 +41,28 @@ func (p *Parser) CommandType() string {
 }
 
 func (p *Parser) Symbol() string {
-	// 現在のコマンドのシンボルまたは10進数の値を返す
+	// 現在のコマンドのシンボルまたは10進数を2進数に変換した値を返す
 	currentCommand := p.commandList[p.currentCommandIdx]
 	if p.CommandType() == "A_COMMAND" {
 		sym := strings.TrimPrefix(currentCommand, "@")
-		return sym
+		return parseDecimalToBinary(sym)
 	} else if p.CommandType() == "L_COMMAND" {
 		sym := strings.TrimSuffix(strings.TrimPrefix(currentCommand, "("), ")")
 		return sym
 	} else {
 		return ""
 	}
+}
+
+func parseDecimalToBinary(decim string) string {
+	// string to int
+	// int to binary
+	i, err := strconv.Atoi(decim)
+	if err != nil {
+		panic(err)
+	}
+	binaryString := fmt.Sprintf("0"+"%015b", i)
+	return binaryString
 }
 
 func (p *Parser) Dest() string {
