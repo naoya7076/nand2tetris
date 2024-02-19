@@ -6,6 +6,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -26,7 +27,7 @@ func main() {
 		if len(text) == 0 || text[0] == '/' || text[0] == ' ' {
 			continue
 		}
-		trimmedSrc += text + "\n"
+		trimmedSrc += strings.ReplaceAll(text, " ", "") + "\n"
 	}
 	// 出力ファイルを作成
 	outputFileName := fileName[:len(fileName)-3] + ".hack"
