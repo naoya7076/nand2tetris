@@ -39,7 +39,6 @@ func main() {
 	// パースした結果を出力ファイルに書き込む
 	p := parser.New(trimmedSrc)
 	for p.HasMoreCommands() {
-		p.Advance()
 		switch p.CommandType() {
 		case "A_COMMAND":
 			outputFile.WriteString(p.Symbol() + "\n")
@@ -53,6 +52,6 @@ func main() {
 		default:
 			fmt.Println("Command type not found")
 		}
+		p.Advance()
 	}
-	fmt.Println(outputFile)
 }
