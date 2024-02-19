@@ -10,7 +10,11 @@ type Parser struct {
 }
 
 func New(source string) *Parser {
-	return &Parser{currentCommandIdx: 0, commandList: strings.Split(source, "\n")}
+	commandList := strings.Split(source, "\n")
+	if commandList[len(commandList)-1] == "" {
+		commandList = commandList[:len(commandList)-1]
+	}
+	return &Parser{currentCommandIdx: 0, commandList: commandList}
 }
 
 func (p *Parser) HasMoreCommands() bool {
