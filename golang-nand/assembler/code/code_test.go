@@ -76,7 +76,7 @@ func TestComp(t *testing.T) {
 		{"D|A", "0010101"},
 		{"M", "1110000"},
 		{"!M", "1110001"},
-		{"-M", "1110111"},
+		{"-M", "1110011"},
 		{"M+1", "1110111"},
 		{"M-1", "1110010"},
 		{"D+M", "1000010"},
@@ -86,6 +86,17 @@ func TestComp(t *testing.T) {
 		{"D|M", "1010101"},
 	}
 	for _, tt := range cases {
+		binaryCode := code.Comp(tt.mnemonic)
+		if binaryCode != tt.want {
+			t.Errorf("want %s, got %s", tt.want, binaryCode)
+		}
+	}
+	wantMap := make(map[string]bool)
+	for _, tt := range cases {
+		if _, exists := wantMap[tt.want]; exists {
+			t.Errorf("want %s, got %s", tt.want, "duplicate")
+		}
+		wantMap[tt.want] = true
 		binaryCode := code.Comp(tt.mnemonic)
 		if binaryCode != tt.want {
 			t.Errorf("want %s, got %s", tt.want, binaryCode)
