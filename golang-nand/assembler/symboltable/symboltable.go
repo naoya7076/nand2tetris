@@ -32,7 +32,7 @@ var initialTable = map[string]int{
 }
 
 func New() *SymbolTable {
-	return &SymbolTable{table: initialTable}
+	return &SymbolTable{table: initialTable, romAddress: 0}
 }
 
 func (st *SymbolTable) AddEntry(symbol string, address int) {
@@ -51,4 +51,8 @@ func (st *SymbolTable) GetAddress(symbol string) int {
 
 func (st *SymbolTable) IncRomAddress() {
 	st.romAddress++
+}
+
+func (st *SymbolTable) GetRomAddress() int {
+	return st.romAddress
 }
