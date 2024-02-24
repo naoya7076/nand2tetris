@@ -31,16 +31,7 @@ func main() {
 
 func Assemble(in *os.File, out *os.File) {
 	// 入力ファイルのテキストからコメントアウトと空白行を削除
-	trimmedSrc := ""
-	scanner := bufio.NewScanner(in)
-	for scanner.Scan() {
-		text := scanner.Text()
-		// ~コメントアウトと空白行をfileから削除
-		if len(text) == 0 || text[0] == '/' || text[0] == ' ' {
-			continue
-		}
-		trimmedSrc += strings.ReplaceAll(text, " ", "") + "\n"
-	}
+	trimmedSrc := trimFileText(in)
 	// 入力ファイルをパース
 	// パースした結果を出力ファイルに書き込む
 	p := parser.New(trimmedSrc)
@@ -60,4 +51,18 @@ func Assemble(in *os.File, out *os.File) {
 		}
 		p.Advance()
 	}
+}
+
+func trimFileText(input *os.File) string {
+	out := ""
+	scanner := bufio.NewScanner(input)
+	for scanner.Scan() {
+		text := strings.TrimSpace(scanner.Text())
+		// コメントアウトと空行を削除
+		if len(text) == 0 || text[0] == '/' {
+			continue
+		}
+		out += text + "\n"
+	}
+	return out
 }
