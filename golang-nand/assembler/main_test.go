@@ -14,6 +14,9 @@ func TestAssemble(t *testing.T) {
 		basePath string
 	}{
 		{"./asm/max/MaxL.asm", "./asm/max/MaxL.hack", "./testdata/MaxL.hack"},
+		{"./asm/pong/PongL.asm", "./asm/pong/PongL.hack", "./testdata/PongL.hack"},
+		{"./asm/rect/RectL.asm", "./asm/rect/RectL.hack", "./testdata/RectL.hack"},
+		{"./asm/add/Add.asm", "./asm/add/Add.hack", "./testdata/Add.hack"},
 	}
 	for _, tt := range cases {
 		inFile, err := os.Open(tt.inPath)
