@@ -59,7 +59,7 @@ func parseDecimalToBinary(decim string) string {
 	// int to binary
 	i, err := strconv.Atoi(decim)
 	if err != nil {
-		panic(err)
+		return decim
 	}
 	binaryString := fmt.Sprintf("0"+"%015b", i)
 	return binaryString
