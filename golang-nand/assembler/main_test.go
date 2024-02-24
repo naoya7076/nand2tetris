@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-// MaxL.asmを変換してMaxL.hackと比較する
 func TestAssemble(t *testing.T) {
 	cases := []struct {
 		inPath   string
