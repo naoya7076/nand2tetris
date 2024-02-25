@@ -3,6 +3,7 @@ package symboltable
 type SymbolTable struct {
 	table      map[string]int
 	romAddress int
+	ramAddress int
 }
 
 var initialTable = map[string]int{
@@ -32,7 +33,7 @@ var initialTable = map[string]int{
 }
 
 func New() *SymbolTable {
-	return &SymbolTable{table: initialTable, romAddress: 0}
+	return &SymbolTable{table: initialTable, romAddress: 0, ramAddress: 16}
 }
 
 func (st *SymbolTable) AddEntry(symbol string, address int) {
@@ -53,6 +54,14 @@ func (st *SymbolTable) IncRomAddress() {
 	st.romAddress++
 }
 
+func (st *SymbolTable) IncRamAddress() {
+	st.ramAddress++
+}
+
 func (st *SymbolTable) GetRomAddress() int {
 	return st.romAddress
+}
+
+func (st *SymbolTable) GetRamAddress() int {
+	return st.ramAddress
 }
