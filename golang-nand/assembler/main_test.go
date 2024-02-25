@@ -28,7 +28,8 @@ func TestAssemble(t *testing.T) {
 			t.Fatal(err)
 		}
 		defer outFile.Close()
-		Assemble(inFile, outFile)
+		trimmedText := trimFileText(inFile)
+		Assemble(trimmedText, outFile)
 		// 出力ファイルと期待するファイルを比較
 		base, err := os.ReadFile(tt.basePath)
 		if err != nil {

@@ -26,15 +26,15 @@ func main() {
 	}
 	defer outputFile.Close()
 
-	Assemble(file, outputFile)
+	trimmedText := trimFileText(file)
+	Assemble(trimmedText, outputFile)
 }
 
-func Assemble(in *os.File, out *os.File) {
+func Assemble(in string, out *os.File) {
 	// 入力ファイルのテキストからコメントアウトと空白行を削除
-	trimmedSrc := trimFileText(in)
 	// 入力ファイルをパース
 	// パースした結果を出力ファイルに書き込む
-	p := parser.New(trimmedSrc)
+	p := parser.New(in)
 	for p.HasMoreCommands() {
 		switch p.CommandType() {
 		case "A_COMMAND":
