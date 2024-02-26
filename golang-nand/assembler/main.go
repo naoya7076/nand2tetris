@@ -66,7 +66,7 @@ func firstPass(p *parser.Parser) *symboltable.SymbolTable {
 			st.IncRomAddress()
 		case "L_COMMAND":
 			symbol := p.Symbol()
-			st.AddEntry(symbol, st.GetRomAddress()+1)
+			st.AddEntry(symbol, st.GetRomAddress())
 		case "C_COMMAND":
 			st.IncRomAddress()
 		default:
