@@ -16,6 +16,7 @@ func TestAssemble(t *testing.T) {
 		{"./asm/max/MaxL.asm", "./asm/max/MaxL.hack", "./testdata/MaxL.hack"},
 		{"./asm/max/Max.asm", "./asm/max/Max.hack", "./testdata/Max.hack"},
 		{"./asm/pong/PongL.asm", "./asm/pong/PongL.hack", "./testdata/PongL.hack"},
+		{"./asm/pong/Pong.asm", "./asm/pong/Pong.hack", "./testdata/Pong.hack"},
 		{"./asm/rect/RectL.asm", "./asm/rect/RectL.hack", "./testdata/RectL.hack"},
 		{"./asm/add/Add.asm", "./asm/add/Add.hack", "./testdata/Add.hack"},
 	}
