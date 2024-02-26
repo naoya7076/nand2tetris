@@ -2,6 +2,7 @@ package parser_test
 
 import (
 	"assembler/parser"
+	"fmt"
 	"testing"
 )
 
@@ -35,13 +36,19 @@ func TestHasMoreCommands(t *testing.T) {
 }
 
 func TestSymbol(t *testing.T) {
-	want := "100"
-	got := parser.New("@100").Symbol()
+	want := fmt.Sprintf("0"+"%015b", 100)
+	got, err := parser.New("@100").Symbol()
+	if err != nil {
+		t.Errorf("Raise error: %v", err)
+	}
 	if got != want {
 		t.Errorf("want %s, got %s", want, got)
 	}
 	want = "LOOP"
-	got = parser.New("(LOOP)").Symbol()
+	got, err = parser.New("(LOOP)").Symbol()
+	if err != nil {
+		t.Errorf("Raise error: %v", err)
+	}
 	if got != want {
 		t.Errorf("want %s, got %s", want, got)
 	}
