@@ -40,29 +40,33 @@ func (p *Parser) CommandType() string {
 	}
 }
 
-func (p *Parser) Symbol() string {
+func (p *Parser) Symbol() (string, error) {
 	// 現在のコマンドのシンボルまたは10進数を2進数に変換した値を返す
 	currentCommand := p.commandList[p.currentCommandIdx]
 	if p.CommandType() == "A_COMMAND" {
 		sym := strings.TrimPrefix(currentCommand, "@")
-		return parseDecimalToBinary(sym)
+		binarySym, err := parseDecimalToBinary(sym)
+		if err != nil {
+			return sym, err
+		}
+		return binarySym, nil
 	} else if p.CommandType() == "L_COMMAND" {
 		sym := strings.TrimSuffix(strings.TrimPrefix(currentCommand, "("), ")")
-		return sym
+		return sym, nil
 	} else {
-		return ""
+		return "", nil
 	}
 }
 
-func parseDecimalToBinary(decim string) string {
+func parseDecimalToBinary(decim string) (string, error) {
 	// string to int
 	// int to binary
 	i, err := strconv.Atoi(decim)
 	if err != nil {
-		return decim
+		return "", err
 	}
 	binaryString := fmt.Sprintf("0"+"%015b", i)
-	return binaryString
+	return binaryString, nil
 }
 
 func (p *Parser) Dest() string {
