@@ -1,9 +1,10 @@
 package main
 
 import (
-	"bytes"
 	"os"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestAssemble(t *testing.T) {
@@ -39,8 +40,8 @@ func TestAssemble(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !bytes.Equal(base, out) {
-			t.Fatalf("expected %s, but got %s", base, out)
+		if diff := cmp.Diff(string(base), string(out)); diff != "" {
+			t.Fatalf("Mismatch (-want +got):\n%s", diff)
 		}
 	}
 }
