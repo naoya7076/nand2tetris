@@ -35,6 +35,10 @@ func TestGetAddress(t *testing.T) {
 	if st.GetAddress(symbol) != 1 {
 		t.Errorf("expected 1, but got %d", st.GetAddress(symbol))
 	}
+	symbol = "R0"
+	if st.GetAddress(symbol) != 0 {
+		t.Errorf("expected 0, but got %d", st.GetAddress(symbol))
+	}
 }
 
 func TestIncRomAddress(t *testing.T) {
