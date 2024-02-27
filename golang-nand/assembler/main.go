@@ -35,15 +35,35 @@ func Assemble(in string, out *os.File) {
 	// 入力ファイルのテキストからコメントアウトと空白行を削除
 	// 入力ファイルをパース
 	// パースした結果を出力ファイルに書き込む
-	p := parser.New(in)
+	p, p2 := parser.New(in), parser.New(in)
 	st := firstPass(p)
-	p2 := parser.New(in)
 	for p2.HasMoreCommands() {
 		switch p2.CommandType() {
 		case "A_COMMAND":
-			out.WriteString(p2.Symbol() + "\n")
+			sym, err := p2.Symbol()
+			if err != nil {
+				// symbolの場合
+				if st.Contains(sym) {
+					out.WriteString("0" + fmt.Sprintf("%015b", st.GetAddress(sym)) + "\n")
+				} else {
+					out.WriteString("0" + fmt.Sprintf("%015b", st.GetRamAddress()) + "\n")
+					st.AddEntry(sym, st.GetRamAddress())
+					st.IncRamAddress()
+				}
+			} else {
+				// 10進数の場合
+				out.WriteString(sym + "\n")
+			}
 		case "L_COMMAND":
-			out.WriteString(p2.Symbol() + "\n")
+			sym, err := p2.Symbol()
+			if err != nil {
+				panic(err)
+			}
+			if !st.Contains(sym) {
+				out.WriteString("0" + fmt.Sprintf("%015b", st.GetRamAddress()) + "\n")
+				st.AddEntry(sym, st.GetRamAddress())
+				st.IncRamAddress()
+			}
 		case "C_COMMAND":
 			dest := code.Dest(p2.Dest())
 			comp := code.Comp(p2.Comp())
@@ -54,7 +74,6 @@ func Assemble(in string, out *os.File) {
 		}
 		p2.Advance()
 	}
-	fmt.Printf("SymbolTable: %v\n", st)
 }
 
 func firstPass(p *parser.Parser) *symboltable.SymbolTable {
@@ -65,7 +84,10 @@ func firstPass(p *parser.Parser) *symboltable.SymbolTable {
 		case "A_COMMAND":
 			st.IncRomAddress()
 		case "L_COMMAND":
-			symbol := p.Symbol()
+			symbol, err := p.Symbol()
+			if err != nil {
+				panic(err)
+			}
 			st.AddEntry(symbol, st.GetRomAddress())
 		case "C_COMMAND":
 			st.IncRomAddress()
