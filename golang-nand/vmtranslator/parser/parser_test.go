@@ -44,3 +44,11 @@ func TestArg1(t *testing.T) {
 		t.Errorf("want %s, got %s", want, got)
 	}
 }
+
+func TestArg2(t *testing.T) {
+	want := 10
+	got := parser.New("push constant 10").Arg2()
+	if got != want {
+		t.Errorf("want %d, got %d", want, got)
+	}
+}
