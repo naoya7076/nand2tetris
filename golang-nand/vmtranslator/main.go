@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"vmtranslator/parser"
 )
 
 func main() {
@@ -29,7 +30,21 @@ func main() {
 }
 
 func Translate(in string, out *os.File) {
-
+	// 入力ファイルを1行ずつ読み込み、Parserに渡す
+	// Parserから得た結果をCodeWriterに渡す
+	parser := parser.New(in)
+	// codeWriter := New(out)
+	for parser.HasMoreCommands() {
+		parser.Advance()
+		switch parser.CommandType() {
+		case "C_ARITHMETIC":
+			// codeWriter.WriteArithmetic(parser.Arg1())
+		case "C_PUSH":
+			// codeWriter.WritePushPop("push", parser.Arg1(), parser.Arg2())
+		case "C_POP":
+			// codeWriter.WritePushPop("pop", parser.Arg1(), parser.Arg2())
+		}
+	}
 }
 
 func trimFileText(input *os.File) string {
